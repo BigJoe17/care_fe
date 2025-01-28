@@ -46,14 +46,10 @@ export const Login = (props: { forgot?: boolean }) => {
     const { value, name } = e.target;
     const fieldValue = Object.assign({}, form);
     const errorField = Object.assign({}, errors);
-    if (errorField[name]) {
-      errorField[name] = null;
-      setErrors(errorField);
-    }
-    fieldValue[name] = value;
-    if (name === "username") {
-      fieldValue[name] = value.toLowerCase();
-    }
+    errorField[name] = errorField[name] ? null : errorField[name];
+    setErrors(errorField);
+
+    fieldValue[name] = name === "username" ? value.toLowerCase() : value;
     setForm(fieldValue);
   };
 
@@ -328,6 +324,7 @@ export const Login = (props: { forgot?: boolean }) => {
                             setForgotPassword(true);
                           }}
                           type="button"
+                          // eslint-disable-next-line tailwindcss/classnames-order
                           className="text-sm text-primary-400 hover:text-primary-500"
                         >
                           {t("forget_password")}
